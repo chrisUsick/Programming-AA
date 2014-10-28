@@ -29,15 +29,20 @@ When implementing an autonomous agent one must throughly understand how an AA pe
 ## Seek and Destroy
 The first autonomous agent we will implement will be a seek and destroy agent[^SD1]. As mentioned this environment will be a two dimensional grid. In this environment there will be a single autonomous agent which will search for 'duds' and destroy them. A dud is what we will call the simple agents which move around the map slowly and randomly[^SD2].  The AA will have to find and destroy all the AA and then signal that it is complete. A dud is destroyed when the AA moves into the same tile which contains the dud.  
 
+[^SD1]: An equivalent example could be a search an rescue agent. The behavior would be almost identical, except rather than destroying, a dud on contact, it would rescue them.
+[^SD2]: Duds are not autonomous agents. They do not respond to their environment.
+
 To implement this autonomous agent we will make a single method. This method will determine how our autonomous agent will move each frame. In AA Factory this method is then interpreted and used to control the AA when the simulation is run. The AA will be developed incrementally. This will illustrate how the structure of an AA and the natural progression of intelligence from a simple reflex agent to a goal based agent.
 
 AAFactory gives us the following skeleton to work off from.  
 
-![The basic skeleton from AAFactory\label{skeleton}](../assets/skeleton.png "skeleton")     
+
+
+<!-- ![The basic skeleton from AAFactory\label{skeleton}](../assets/skeleton.png "skeleton")      -->
 
 As mentioned, there is one function, with a several parameters and it returns a direction. All the possible directions are stored in an object called `Directions`. Here is the its definition:
 \begin{minted}[linenos,
-               frame=lines]{javascript}
+               frame=leftline]{javascript}
 var Directions = {
   UPLEFT: 0,
   LEFT: 1,
@@ -72,6 +77,32 @@ So, in figure \ref{skeleton} our AA will simply stay where it is. Here are the d
 `finished`
 :   a method which the AA must call to signal that it is completed. Calling this method before all the duds are destroyed will cause it to lose.
 
-Let's add the first code to create an autonomous agent
-[^SD1]: An equivalent example could be a search an rescue agent. The behavior would be almost identical, except rather than destroying, a dud on contact, it would rescue them.
-[^SD2]: Duds are not autonomous agents. They do not respond to their environment.
+Let's add the first code to create an autonomous agent.
+
+
+
+## Simple reflex Agent
+The first step to creating our autonomous agent is adding a reflexive behavior: if there is a dud next to the AA, it should move in that direction.  To do this, we will loop through the   `neighbors` array and check if there is a dud in an adjacent tile. Duds are denoted by a 1 in the `neighbors` array.
+
+\begin{listing}[H]
+  \begin{minted}[linenos, frame=leftline]{javascript}
+  function(x, y, neighbors, validDirections, data, finished) {
+    var dudDir;
+    // loop through neighbors, if there's a dud, break
+    for (var dir = 0; dir < neighbors.length; dir ++) {
+      if (neighbors[dir] == 1) {
+        dudDir = dir;
+        break;
+      }
+    }
+
+    // if there is a dud, move in that direction
+    if (dudDir) {
+      return dudDir;
+    } else {
+      return Directions.CENTER;
+  } 
+  \end{minted}
+  \caption{An AA with simple reflex behavior.}
+  \label{reflex}
+\end{listing}
