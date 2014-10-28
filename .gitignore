@@ -1,5 +1,5 @@
 ProgrammingAA.sublime-project
 ProgrammingAA.sublime-workspace
 biblatex-tests
-*.tex
 build
+node_modules

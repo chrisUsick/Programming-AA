@@ -1,0 +1,22 @@
+{
+  "name": "informationAssign",
+  "version": "1.0.0",
+  "description": "rm build/*\r cp src/* build/\r pandoc --smart -o body.tex body.md\r ## full build command\r rm build/* && pandoc --smart -o src/body.tex src/body.md && cp src/* build/ && cd build/ && pdflatex --shell-escape main",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "/c/Users/Sean//Dropbox/git-p/informationAssign.git/"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "extend": "^2.0.0",
+    "grunt": "^0.4.5",
+    "grunt-exec": "^0.4.6",
+    "grunt-mkdir": "^0.1.2",
+    "load-grunt-tasks": "^1.0.0"
+  }
+}
