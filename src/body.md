@@ -81,7 +81,7 @@ Let's add the first code to create an autonomous agent.
 
 
 
-## Simple reflex Agent
+### Simple reflex Agent
 The first step to creating our autonomous agent is adding a reflexive behavior: if there is a dud next to the AA, it should move in that direction.  To do this, we will loop through the   `neighbors` array and check if there is a dud in an adjacent tile. Duds are denoted by a 1 in the `neighbors` array.
 
 \begin{listing}[H]
@@ -106,3 +106,7 @@ The first step to creating our autonomous agent is adding a reflexive behavior: 
   \caption{An AA with simple reflex behavior.}
   \label{reflex}
 \end{listing}
+
+At line 4 we the AA loops through the neighbors, storing the direction of the first neighbor in the variable  `dudDir`, if there is one[^SRA1]. At line 12 the AA will move in the direction of the dud if there was one else, stay put. In just 12 lines of code we have implemented a fully operational simple reflex autonomous agent. Keep in mind though, this agent doesn't complete the task it was given. It doesn't say that it is finished nor does it have a way of reasoning out whether it should be done or not.
+
+[^SRA1]: Neighbors is an array of length 9 where the neighbors are listed from top-left to bottom-right. The `Directions` object's properties contain integers that can be used to reference an array of neighbors. E.x. `neighbors[0]` corresponds to the upper-left neighbor. `Directions.UPLEFT`'s value is `0`.
