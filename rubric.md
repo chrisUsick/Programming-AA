@@ -26,9 +26,3 @@ Reference List*
 
 Note: The items marked ‘*’ do not count towards the 3-6 page content limits.
 
-## Presentation
-All students will present their informational report to the remainder of the class after midterm week of the course. Preferred presentation time is to be reserved by the student. Contact your instructor by email starting on the Monday before midterm week (early requests will be ignored) to book your preferred presentation time. DO NOT assume your presentation time request has been accepted until you receive a reply from your instructor indicating that it has been. All presentation times must be booked by the end of that week or will be assigned by the instructor. Present the contents of your informational report to your classmates. Do not simply read the informational report aloud. Put together some sort of visual presentation (use your imagination) to present your information. Each presentation must:
-- Use some sort of visual aid(s)
-- Last from 3-5 minutes
-- Allow 1-2 minutes for questions at the end
-
