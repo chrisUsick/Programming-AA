@@ -35,7 +35,7 @@ AAFactory gives us the following skeleton to work off from.
 
 ![The basic skeleton from AAFactory\label{skeleton}](../assets/skeleton.png "skeleton")     
 
-As mentioned, there is one function, with a several parameters and it returns a direction. All the possible directions are stored in an object called `Directions` and here are their names:
+As mentioned, there is one function, with a several parameters and it returns a direction. All the possible directions are stored in an object called `Directions`. Here is the its definition:
 \begin{minted}[linenos,
                frame=lines]{javascript}
 var Directions = {
@@ -72,6 +72,6 @@ So, in figure \ref{skeleton} our AA will simply stay where it is. Here are the d
 `finished`
 :   a method which the AA must call to signal that it is completed. Calling this method before all the duds are destroyed will cause it to lose.
 
-
+Let's add the first code to create an autonomous agent
 [^SD1]: An equivalent example could be a search an rescue agent. The behavior would be almost identical, except rather than destroying, a dud on contact, it would rescue them.
 [^SD2]: Duds are not autonomous agents. They do not respond to their environment.
