@@ -230,9 +230,9 @@ Note, the value of the constant `maxDifference` was arbitrarily chosen. We will 
 Note, there were several lines of code that we added here. An if statement is added to control the properties in the `data` object. Then there is an if statement which controls whether to call the `finished` method or not. Lastly there is the line to increment `data.lastSeen`. The constant `maxDifference` has been reduced to 14. This value results in a high success rate when tested multiple times.
 
 [^SL1]: Technically, this isn't machine learning. The autonomous agent doesn't change its behavior by evaluating its previous actions \autocite{russell_learning}. If the AA was given the opportunity to run again, and change whether they won or lost based on how the did in the previous game the AA could be considered a learning AA. 
+
 ### Next Steps
-- better searching
-- making a model-based AA
-  + builds an internal map of the environment
-  + uses stats to predict location of duds
-  + more accurately predicts when it is complete
+The material that has been covered so far is only the beginning. There are many improvements that could be made to the autonomous agent. The primary area of concern with the current AA program is that it doesn't succeed all the time. To improve this a better searching algorithm could be used, as well as a modified method for determining whether or not it should be completed. Another improvement that could be made is to have our AA build a model of the environment. This would allow it to predict the location of duds and be more accurate about when it is complete. 
+
+# Conclusion
+Autonomous agents are entities which interact with their environment. Autonomous agents can be classified based on their abilities and intelligence. Autonomous agents are used in many real-world situations. Actuators, sensors and state are the components which make up an AA. AA Factory, an interactive programming tool, was used to implement an autonomous agent. When implementing an autonomous agent there are several consideration about the environment and the agent being implemented that should be made. One must consider the properties of the environment as well as the nature of the agent. This involves determining how can it perceive the world, and how does it interact with it. An autonomous agent was implemented which successfully completed the task of seeking out targets and destroying them in an environment where the autonomous agent wasn't able to perceive the whole world at once. With AA Factory, it less than 40 lines of code to implement an autonomous agent which performed a non-trivial task. It is clear that through AA Factory autonomous agent development can be explored in an intuitive and simple way. Autonomous agents are a science that will change the world, and by learning about them one may appreciate, and even contribute to the future of autonomous agents.
