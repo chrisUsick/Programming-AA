@@ -27,7 +27,7 @@ When implementing an autonomous agent one must throughly understand how an AA pe
 [^AC1]: An autonomous search and rescue vehicle can't know the location of injured people without finding them first.
 
 ## Seek and Destroy
-The first autonomous agent we will implement will be a seek and destroy agent[^SD1]. As mentioned this environment will be a two dimensional grid. In this environment there will be a single autonomous agent which will search for 'duds' and destroy them. A dud is what we will call the simple agents which move around the map slowly and randomly[^SD2].  The AA will have to find and destroy all the AA and then signal that it is complete. A dud is destroyed when the AA moves into the same tile which contains the dud.  
+The first autonomous agent we will implement will be a seek and destroy agent[^SD1]. As mentioned this environment will be a two dimensional grid. In this environment there will be a single autonomous agent which will search for 'duds' and destroy them. A dud is what we will call the simple agents which move around the map slowly and randomly[^SD2].  The AA will have to find and destroy all the AA and then signal that it is complete *in the shortest amount of time possible*. A dud is destroyed when the AA moves into the same tile which contains the dud.  
 
 [^SD1]: An equivalent example could be a search an rescue agent. The behavior would be almost identical, except rather than destroying, a dud on contact, it would rescue them.
 [^SD2]: Duds are not autonomous agents. They do not respond to their environment.
@@ -85,7 +85,7 @@ Let's add the first code to create an autonomous agent.
 The first step to creating our autonomous agent is adding a reflexive behavior: if there is a dud next to the AA, it should move in that direction.  To do this, we will loop through the   `neighbors` array and check if there is a dud in an adjacent tile. Duds are denoted by a 1 in the `neighbors` array.
 
 \begin{listing}[H]
-  \begin{minted}[linenos, frame=leftline]{javascript}
+  \begin{minted}[gobble=2,linenos, frame=leftline]{javascript}
   function(x, y, neighbors, validDirections, data, finished) {
     var dudDir;
     // loop through neighbors, if there's a dud, break
@@ -110,3 +110,129 @@ The first step to creating our autonomous agent is adding a reflexive behavior: 
 At line 4 we the AA loops through the neighbors, storing the direction of the first neighbor in the variable  `dudDir`, if there is one[^SRA1]. At line 12 the AA will move in the direction of the dud if there was one else, stay put. In just 12 lines of code we have implemented a fully operational simple reflex autonomous agent. Keep in mind though, this agent doesn't complete the task it was given. It doesn't say that it is finished nor does it have a way of reasoning out whether it should be done or not.
 
 [^SRA1]: Neighbors is an array of length 9 where the neighbors are listed from top-left to bottom-right. The `Directions` object's properties contain integers that can be used to reference an array of neighbors. E.x. `neighbors[0]` corresponds to the upper-left neighbor. `Directions.UPLEFT`'s value is `0`.
+
+### Adding goal-oriented behavior: Searching
+The next step is to add searching behavior. When there isn't any duds around the AA, it should move in order to find some. This behavior is necessary for programming the AA to signal that it is complete. We will implement that feature next. A simple search behavior could be, "if there isn't a dud around me, move in a random direction."
+One of the parameters passed to the AA method is `validDirections`. To move around randomly would be to return a randomly selected element from `validDirections`. We will do this by adding the following code to the AA:
+
+\begin{listing}[H]
+  \begin{minted}[gobble=2, linenos, frame=leftline]{javascript}
+  function(x, y, neighbors, validDirections, data, finished) {
+      var dudDir;
+      var randomNum = Math.floor(Math.random() * validDirections.length);
+      // loop through neighbors, if there's a dud, break
+      for (var dir = 0; dir < neighbors.length; dir ++) {
+        if (neighbors[dir] == 1) {
+          dudDir = dir;
+          break;
+        }
+      }
+
+      // if there is a dud, move in that direction
+      if (dudDir) {
+        return dudDir;
+      } else {
+        // return a random, valid direction
+        return validDirections[randomNum];
+      }
+  }
+  \end{minted}
+  \caption{An AA with searching behavior.}
+  \label{searching}
+\end{listing}
+
+The variable `randomNum` holds a random integer we can use to index the `validDirections` array. 
+
+### decided when to finish: simple learning
+This is perhaps the most difficult task the AA must complete. There are a variety of ways of approaching the problem but given the ability of our current AA, a statistical approach will be used here. Consider the question, "How would you solve this problem?" An answer might be, "When I haven't seen a dud in a long time, they are probably all gone." Since the AA must complete the task as soon as possible this would be a better answer than something like "find the edges of the map and then search every possible tile." That would take far too long. We can an analytical component to our AA to try and approximate the right decision[^SL1].  A solution to the problem could be stated as follows:
+
+> Given the average time elapsed between each sighting of a dud, if the time since the last seen dud minus the average time it takes to sight a dud is greater than a certain value, it is statistically likely that there are no more duds.  Assuming the duds move in random motion, the "certain value" will be dependent only on the size of the environment.
+ 
+In mathematical notation this could be stated as $ABS(deltaAvg - lastSeen) > x$ where `deltaAvg` is the average time between seeing 2 duds and `lastSeen` is the time since the last dud was seen. `x` is a constant that we will select through experimentation. If the above expression is true then it is likely that there are no more duds left, therefore the AA should signal that it is complete. Note, the smaller the value of `x`, the more likely the AA will signal completion when there are still duds left.
+
+To implement that in our autonomous agent, we will use the `data` parameter. A simple way to keep a running average is to have one property store the sum, and one property store the number of items being averaged. We will initialize these properties like this:
+
+\begin{listing}[H]
+  \begin{minted}[gobble=2, frame=leftline]{javascript}
+  function(x, y, neighbors, validDirections, data, finished) {
+      ...
+      // maxDifference is a constant
+      const maxDifference = 20;
+      // the `data` object may not have the properties initialized 
+      // (at the initial calling of the function)
+      data.deltaSum = data.deltaSum || 0;
+      data.deltaCount = data.deltaCount || 0;
+      data.lastSeen = data.lastSeen || 0;
+      ...
+
+
+    }
+  \end{minted}
+  \caption{Properties to initialize. Parts of the function are omitted for brevity.}
+  \label{initProps}
+\end{listing}
+
+The AA should call the `finished` method if the following expression evaluates to true:
+
+\begin{minted}[frame=leftline]{javascript}
+Math.abs((data.deltaSum/data.deltaCount) - data.lastSeen) > maxDifference;
+\end{minted}
+
+Note, the value of the constant `maxDifference` was arbitrarily chosen. We will test this value to find the lowest value which give good results. Putting all this together will yield an AA which completes the given task.
+
+\begin{listing}[H]
+  \begin{minted}[linenos, frame=leftline]{javascript}
+    function(x, y, neighbors, validDirections, data, finished) {
+      var dudDir;
+      var randomNum = Math.floor(Math.random() * validDirections.length);
+      // maxDifference is a constant
+      const maxDifference = 14;
+      // the `data` object may not have the properties initialized (at the initial calling of the function)
+      data.deltaSum = data.deltaSum || 0;
+      data.deltaCount = data.deltaCount || 0;
+      data.lastSeen = data.lastSeen || 0;
+      // loop through neighbors, if there's a dud, break
+      for (var dir = 0; dir < neighbors.length; dir ++) {
+        if (neighbors[dir] == 1) {
+          dudDir = dir;
+          break;
+        }
+      }
+
+      // if dudDir was set, then there was a dud
+      if(dudDir) {
+        data.deltaSum += data.lastSeen;
+        data.deltaCount += 1;
+        data.lastSeen = 0;
+      }
+
+      // if the data.lastSeen is greater than the average lastSeen time
+      if (Math.abs((data.deltaSum / data.deltaCount) - data.lastSeen) > maxDifference) {
+        finished();
+      }
+
+      // always increment the lastSeen property
+      data.lastSeen++;
+
+      // if there is a dud, move in that direction
+      if (dudDir) {
+        return dudDir;
+      } else {
+        // return a random, valid direction
+        return validDirections[randomNum];
+      }
+    }
+  \end{minted}
+  \caption{The final AA.}
+  \label{final}
+\end{listing}
+
+Note, there were several lines of code that we added here. An if statement is added to control the properties in the `data` object. Then there is an if statement which controls whether to call the `finished` method or not. Lastly there is the line to increment `data.lastSeen`. The constant `maxDifference` has been reduced to 14. This value results in a high success rate when tested multiple times.
+
+[^SL1]: Technically, this isn't machine learning. The autonomous agent doesn't change its behavior by evaluating its previous actions \autocite{russell_learning}. If the AA was given the opportunity to run again, and change whether they won or lost based on how the did in the previous game the AA could be considered a learning AA. 
+### Next Steps
+- better searching
+- making a model-based AA
+  + builds an internal map of the environment
+  + uses stats to predict location of duds
+  + more accurately predicts when it is complete
