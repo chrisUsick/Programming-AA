@@ -53,6 +53,16 @@
 \usepackage{minted}
 \usepackage{graphicx}
 
+\let\olditemize\itemize
+\renewcommand{\itemize}{
+  \olditemize
+  \setlength{\itemsep}{0pt}
+  \setlength{\parskip}{0pt}
+  \setlength{\parsep}{0pt}
+}
+
+\usepackage{mdwlist}
+
 \usepackage[backend=biber,
 style=apa
 % style=alphabetic
@@ -70,5 +80,7 @@ style=apa
 
 \maketitle
 \input{body}
+\begin{singlespacing}
 \printbibliography
+\end{singlespacing}
 \end{document}
