@@ -1,4 +1,4 @@
-\documentclass[11pt,british]{article}
+\documentclass[11pt,british, titlepage]{article}
 \usepackage{mathptmx}
 \usepackage{fullpage}
 \usepackage{setspace}
@@ -63,6 +63,8 @@
 
 \usepackage{mdwlist}
 
+\newcommand{\HRule}{\rule{\linewidth}{0.5mm}}
+
 \usepackage[backend=biber,
 style=apa
 % style=alphabetic
@@ -77,8 +79,26 @@ style=apa
 \date{October 2014}
 
 \begin{document}
+\begin{titlepage}
+\vspace*{\fill}
+\begin{center}
+  {\huge Programming Autonomous Agents \\[0.4cm]}
+  \HRule \\[1.5cm]
+  \emph{Prepared By:}\\
+  Chris \textsc{Usick}\\
 
-\maketitle
+  \emph{Prepared For:} \\
+  Geoffrey \textsc{Bresch}
+  
+  \vfill
+
+  % Bottom of the page
+  {\large October, 2014} 
+\end{center}
+\vspace*{\fill}
+\end{titlepage}
+
+% \maketitle
 \input{body}
 \begin{singlespacing}
 \printbibliography
