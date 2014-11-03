@@ -4,6 +4,7 @@ module.exports = function(grunt) {
 
   var build = {
     buildtex: 'cd build && pandoc --smart -o body.tex ../src/body.md',
+    builddocx: 'cd build && pandoc --smart -o body.docx ../src/body.md',
     cpmain: 'cp src/main.tex build/main.tex',
     cpbib: 'cp src/bibliography.bib build/bibliography.bib',
 
