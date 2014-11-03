@@ -7,7 +7,7 @@ Automated processes are all around us. In our world, automation plays a keep rol
 \item
   operate autonomously
 \item
-  can at perpetually
+  can act perpetually
 \item
   pursue goals and
 \item
