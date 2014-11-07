@@ -22,11 +22,11 @@ Autonomous agents might have physical components but at the core, they are drive
 Agent comes from the 'Software entity' part of the definition, and autonomous comes from the 'perceive its environment and act independently'.
 
 ### Abilities
-- perceive the environment
-- operate autonomously
-- can act perpetually
-- pursue goals and
-- adapt to the environment
+perceive the environment
+operate autonomously
+can act perpetually
+pursue goals and
+adapt to the environment
 
 #### Notes
 All autonomous agents can do at least the first 4. Some AA don't adapt to their environment but do everything else.
@@ -61,9 +61,9 @@ All the examples here meet the definition given earlier. Example: the environmen
 This is the fun part. We will implement a slightly sophisticated AA. Open up AA Factory now.
 
 ### AA Factory
-- Educational programming app
-- lets users build autonomous agents and test them in an interactive environment
-- AA Factory has a series of levels for users to complete
+Educational programming app
+lets users build autonomous agents and test them in an interactive environment
+AA Factory has a series of levels for users to complete
 
 #### Notes
 AA Factory lets you interactively learn about AA. It's a work in progress, developed by my brother and I. 
