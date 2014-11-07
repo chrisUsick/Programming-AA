@@ -35,12 +35,13 @@ When implementing an autonomous agent one must throughly understand how an AA pe
 [^AC1]: An autonomous search and rescue vehicle can't know the location of injured people without finding them first.
 
 ## Seek and Destroy
-We will implement will be a seek and destroy agent[^SD1]. As mentioned this environment will be a two dimensional grid. In this environment there will be a single autonomous agent which will search for 'duds' and destroy them. A dud is what we will call the simple agents which move around the map slowly and randomly[^SD2].  The AA will have to find and destroy all the AA and then signal that it is complete *in the shortest amount of time possible*. A dud is destroyed when the AA moves into the same tile which contains the dud.  
+We will implement a seek and destroy agent[^SD1]. The environment will be a two dimensional grid. In this environment there will be a single autonomous agent which will search for 'duds' and destroy them. A dud is what we will call the simple agents which move around the map slowly and randomly[^SD2].  The AA will have to find and destroy all the AA and then signal that it is complete *in the shortest amount of time possible*. A dud is destroyed when the AA moves into the same tile which contains the dud[^SD3].  
 
 [^SD1]: An equivalent example could be a search an rescue agent. The behavior would be almost identical, except rather than destroying, a dud on contact, it would rescue them.
 [^SD2]: Duds are not autonomous agents. They do not respond to their environment.
+[^SD3]: You can use AA Factory at: http://ec2-54-69-176-176.us-west-2.compute.amazonaws.com/robots/ Navigate to level 3 to see this code in action.
 
-To implement this autonomous agent we will make a single method. This method will determine how our autonomous agent will move each frame. In AA Factory this method is then interpreted and used to control the AA when the simulation is run. The AA will be developed incrementally. This will illustrate the structure of an AA and the natural progression of intelligence from a simple reflex agent to a goal based agent.
+To implement this autonomous agent we will make a single method. This method will determine how our autonomous agent will move each frame. In AA Factory this method is then interpreted and used to control the AA when the simulation is run. The AA will be developed incrementally. which will illustrate the structure of an AA and the natural progression of intelligence from a simple reflex agent to a goal based agent.
 
 AA Factory gives us the following skeleton to work from.  
 
@@ -81,7 +82,7 @@ var Directions = {
 \end{listing}
 \end{singlespacing}
 
-So, in figure \ref{skeleton} our AA will simply stay where it is. Here are the definitions of the parameters of the function:  
+So, in listing \ref{skeleton} our AA will simply stay where it is. Here are the definitions of the parameters of the function:  
 
 `x`
 :   the horizontal location of the AA.  
@@ -125,7 +126,7 @@ The first step to creating our autonomous agent is adding a reflexive behavior: 
       return Directions.CENTER;
   } 
   \end{minted}
-  \caption{An AA with simple reflex behavior.}
+  \caption{An automation with simple reflex behavior.}
   \label{reflex}
 \end{listing}
 \end{singlespacing}
