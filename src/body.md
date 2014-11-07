@@ -267,4 +267,6 @@ Note, there were several lines of code that we added here. An if statement is ad
 The material that has been covered so far is only the beginning. There are many improvements that could be made to the autonomous agent. The primary area of concern with the current AA program is that it doesn't succeed all the time. To improve this a better searching algorithm could be used, as well as a modified method for determining whether or not it should be completed. Another improvement that could be made is to have our AA build a model of the environment. This would allow it to predict the location of duds and be more accurate about when it is complete. 
 
 # Conclusion
+\begin{doublespace}
 Autonomous agents are entities which interact with their environment and can be classified based on their abilities and intelligence. Actuators, sensors and state are the components which make up an AA. AA Factory, an interactive programming tool, was used to implement an autonomous agent.  An autonomous agent was created which could be behave perpetually and complete goals. Through AA Factory autonomous agent development can be explored in an intuitive and simple way. Autonomous agents are a science that will change the world, and by learning about them one may appreciate, and even contribute to the future of autonomous agents. 
+\end{doublespace}
